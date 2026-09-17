@@ -48,6 +48,8 @@ button{
 
 <section id="two" class="hidden">
 <div class="heart">🥞</div>
+<p>First, tell me your name 😊</p>
+<input type="text" id="nameChoice" placeholder="Enter your name" class="datePicker">
 <h1>Choose our food</h1>
 <p>What should we eat?</p>
 
@@ -98,6 +100,7 @@ button{
 let selectedFood="";
 let selectedVibe="";
 let selectedDate="";
+let selectedName="";
 
 let noClicks=0;
 
@@ -151,10 +154,18 @@ function vibe(btn,value){
 }
 
 function next(){
+ selectedName=document.getElementById("nameChoice").value.trim();
+
+ if(!selectedName){
+  alert("Please enter your name ❤️");
+  return;
+ }
+
  if(!selectedFood){
   alert("Choose our food first ❤️");
   return;
  }
+
  show("three");
 }
 
@@ -173,7 +184,7 @@ async function finish(){
 
  const formData = new FormData();
  formData.append("_subject","Date Response ❤️");
- formData.append("Name","Hello Love");
+ formData.append("Name",selectedName);
  formData.append("Food",selectedFood);
  formData.append("Date Plan",selectedVibe);
  formData.append("Date",selectedDate);
