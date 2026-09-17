@@ -1,1 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Our Date ❤️</title>
+<style>
+body{
+ margin:0;font-family:Arial,sans-serif;
+ background:linear-gradient(135deg,#fff0f6,#eef7ff);
+ min-height:100vh;display:flex;align-items:center;
+ justify-content:center;color:#292747;
+}
+.card{
+ width:90%;max-width:420px;background:white;
+ padding:30px 20px;border-radius:28px;
+ box-shadow:0 20px 60px #0002;text-align:center;
+}
+.heart{font-size:65px}
+h1{font-size:30px}
+button{
+ border:0;border-radius:15px;padding:15px;
+ margin:6px;font-size:16px;font-weight:bold;
+ cursor:pointer;
+}
+.yes{background:#ff5c8a;color:white}
+.option{background:#f5f5f7;width:44%}
+.selected{background:#ffe5ef;border:2px solid #ff5c8a}
+.next{background:#292747;color:white;margin-top:20px}
+.grid{display:flex;flex-wrap:wrap;justify-content:center}
+.hidden{display:none}
+.small{color:#888;font-size:13px}
+</style>
+</head>
 
+<body>
+<div class="card">
+
+<section id="one">
+<div class="heart">❤️</div>
+<h1>Hey you...</h1>
+<p>I have an important question for you.</p>
+<h2>Will you go on a date with me?</h2>
+<button class="yes" onclick="show('two')">YES ❤️</button>
+<p class="small">Margin of Safety: 100% ✈️</p>
+</section>
+
+<section id="two" class="hidden">
+<div class="heart">🥞</div>
+<h1>Choose our food</h1>
+<p>What should we eat?</p>
+
+<div class="grid">
+<button class="option" onclick="food(this,'Dosa')">🥞 Dosa</button>
+<button class="option" onclick="food(this,'Biryani')">🍛 Biryani</button>
+<button class="option" onclick="food(this,'Pizza')">🍕 Pizza</button>
+<button class="option" onclick="food(this,'Noodles')">🍜 Noodles</button>
+</div>
+
+<button class="next" onclick="next()">Continue →</button>
+</section>
+
+<section id="three" class="hidden">
+<div class="heart">💕</div>
+<h1>Pick our vibe</h1>
+
+<div class="grid">
+<button class="option" onclick="vibe(this,'Coffee & Talk')">☕ Coffee & Talk</button>
+<button class="option" onclick="vibe(this,'Movie Night')">🎬 Movie Night</button>
+<button class="option" onclick="vibe(this,'Long Drive')">🚗 Long Drive</button>
+<button class="option" onclick="vibe(this,'Walk & Chill')">🌙 Walk & Chill</button>
+</div>
+
+<button class="next" onclick="finish()">Submit ❤️</button>
+</section>
+
+<section id="four" class="hidden">
+<div class="heart">🥰</div>
+<h1>It's a date!</h1>
+<p id="result"></p>
+<p class="small">Date plan submitted ❤️</p>
+</section>
+
+</div>
+
+<script>
+let selectedFood="";
+let selectedVibe="";
+
+function show(id){
+ document.querySelectorAll("section")
+ .forEach(x=>x.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+}
+
+function food(btn,value){
+ document.querySelectorAll("#two .option")
+ .forEach(x=>x.classList.remove("selected"));
+ btn.classList.add("selected");
+ selectedFood=value;
+}
+
+function vibe(btn,value){
+ document.querySelectorAll("#three .option")
+ .forEach(x=>x.classList.remove("selected"));
+ btn.classList.add("selected");
+ selectedVibe=value;
+}
+
+function next(){
+ if(!selectedFood){
+  alert("Choose our food first ❤️");
+  return;
+ }
+ show("three");
+}
+
+function finish(){
+ if(!selectedVibe){
+  alert("Choose our date vibe ❤️");
+  return;
+ }
+
+ localStorage.setItem(
+  "dateResult",
+  JSON.stringify({
+   food:selectedFood,
+   vibe:selectedVibe,
+   time:new Date().toLocaleString()
+  })
+ );
+
+ document.getElementById("result").innerHTML=
+ "🥞 Food: <b>"+selectedFood+
+ "</b><br><br>💕 Vibe: <b>"+selectedVibe+
+ "</b>";
+
+ show("four");
+}
+</script>
+
+</body>
+</html>
