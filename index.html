@@ -23,6 +23,7 @@ button{
  cursor:pointer;
 }
 .yes{background:#ff5c8a;color:white}
+.no{background:#eee;color:#555;position:relative}
 .option{background:#f5f5f7;width:44%}
 .selected{background:#ffe5ef;border:2px solid #ff5c8a}
 .next{background:#292747;color:white;margin-top:20px}
@@ -41,6 +42,7 @@ button{
 <p>I have an important question for you.</p>
 <h2>Will you go on a date with me?</h2>
 <button class="yes" onclick="show('two')">YES ❤️</button>
+<button class="no" onclick="nope(this)">NO 😏</button>
 <p class="small">Margin of Safety: 100% ✈️</p>
 </section>
 
@@ -85,6 +87,37 @@ button{
 <script>
 let selectedFood="";
 let selectedVibe="";
+
+let noClicks=0;
+
+function nope(btn){
+ noClicks++;
+
+ const messages=[
+  "Are you sure? 😏",
+  "Think again 😂",
+  "Wrong button! ❤️",
+  "Nice try! 😌",
+  "The NO button is shy 🙈"
+ ];
+
+ document.getElementById("noMessage").textContent =
+ messages[Math.min(noClicks-1,messages.length-1)];
+
+ btn.style.position="fixed";
+
+ const maxX=Math.max(10,window.innerWidth-btn.offsetWidth-10);
+ const maxY=Math.max(10,window.innerHeight-btn.offsetHeight-10);
+
+ btn.style.left=Math.floor(Math.random()*maxX)+"px";
+ btn.style.top=Math.floor(Math.random()*maxY)+"px";
+
+ if(noClicks>=5){
+  btn.textContent="YES ❤️";
+  btn.className="yes";
+  btn.onclick=function(){show('two')};
+ }
+}
 
 function show(id){
  document.querySelectorAll("section")
